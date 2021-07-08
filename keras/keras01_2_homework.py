@@ -17,4 +17,4 @@ loss = model.evaluate(x, y)
 print('Loss : ', loss)
 result = model.predict(x_pred)
 print('예측값 : ', result)
-
+# 리더보드 방식 -> 최고점을 항상 갱신시키는 방식
