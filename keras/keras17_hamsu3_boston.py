@@ -1,6 +1,6 @@
 from re import M
-from tensorflow.keras.models import Sequential 
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, Input
 import numpy as np 
 
 from sklearn.datasets import load_boston
@@ -16,6 +16,40 @@ x_train, x_test, y_train, y_test = train_test_split(x,y,
 train_size = 0.7, random_state=66)
 
 #2.모델 구성
+input1 = Input(shape=(13,))
+dense1 = Dense(5)(input1)
+dense2 = Dense(5)(dense1)
+dense3 = Dense(6)(dense2)
+dense4 = Dense(7)(dense3)
+output1 = Dense(1)(dense4)
+
+model = Model(inputs = input1, outputs = output1) # 모델 여러개를 합치거나 순서를 바꾸기 쉽다.
+'''
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+input_1 (InputLayer)         [(None, 13)]              0
+_________________________________________________________________
+dense (Dense)                (None, 5)                 70
+_________________________________________________________________
+dense_1 (Dense)              (None, 5)                 30
+_________________________________________________________________
+dense_2 (Dense)              (None, 6)                 36
+_________________________________________________________________
+dense_3 (Dense)              (None, 7)                 49
+_________________________________________________________________
+dense_4 (Dense)              (None, 1)                 8
+=================================================================
+Total params: 193
+Trainable params: 193
+Non-trainable params: 0
+_________________________________________________________________
+5/5 [==============================] - 0s 1ms/step - loss: 75.9889
+loss :  75.98888397216797
+r2score  0.08022809131784148
+'''
+'''
 model = Sequential()
 model.add(Dense(5, input_dim = 13))
 model.add(Dense(5))
@@ -23,14 +57,14 @@ model.add(Dense(6))
 model.add(Dense(7))
 model.add(Dense(1))
 
-'''
+
 loss :  47.58588790893555
 r2score  0.42401892574729616
 '''
 #3.complie/훈련
 model.compile(loss = 'mse', optimizer = 'adam')
 model.fit(x_train, y_train, epochs=100, batch_size=10, validation_split=0.3) 
-
+model.summary()
 #4.평가/예측
 loss = model.evaluate(x_test, y_test) 
 print('loss : ', loss)
