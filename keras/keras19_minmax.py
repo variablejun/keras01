@@ -9,7 +9,16 @@ datasets = load_boston()
 #1.data
 x = datasets.data
 y = datasets.target
+'''
+데이터 전처리 과정 
+minmax scalery : 모든 데이터를 최대값으로 나누어 최소값은  최대값은1로 바꾸어 연산해서 exploding을 방지하고 성능을향상시키는것
+데이터의 비율은 변하지 않기 때문에 y값도 변하지 않는다. 
+공식 (개체 - min)/ (max - min)
+numpy는 부동소수점 연산에 특화되어있다
+'''
+print(np.max(x))
 
+x = x/np.max(x)
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x,y,
@@ -17,15 +26,21 @@ train_size = 0.95, random_state=66)
 
 #2.모델 구성
 model = Sequential()
-model.add(Dense(5, input_dim = 13))
-model.add(Dense(5))
-model.add(Dense(6))
-model.add(Dense(7))
+model.add(Dense(50,activation='relu', input_dim = 13))
+model.add(Dense(64,activation='relu'))
+model.add(Dense(32,activation='relu'))
+model.add(Dense(16,activation='relu'))
 model.add(Dense(1))
 
 '''
-loss :  47.58588790893555
-r2score  0.42401892574729616
+전처리후 수치
+loss :  9.419081687927246
+r2score  0.926950027562462
+
+47/47
+train_size = 0.95 와 batch_size=10에 따라서 달라진다.
+loss :  10.399333953857422
+r2score  0.9193476432016088
 '''
 #3.complie/훈련
 model.compile(loss = 'mse', optimizer = 'adam')

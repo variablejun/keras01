@@ -17,6 +17,8 @@ dense3 = Dense(10)(dense2)
 output1 = Dense(2)(dense3)
 
 model = Model(inputs = input1, outputs = output1) # 모델 여러개를 합치거나 순서를 바꾸기 쉽다.
+# 모델을 명시하는 위치가 시퀀셜형과 다르게 명시해준다
+# (inputshape + b) * outputshape
 model.summary()
 '''
 Model: "model"

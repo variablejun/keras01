@@ -11,6 +11,8 @@ datasets = load_diabetes()
 x = datasets.data
 y = datasets.target
 
+x = (x - np.min(x)) / (np.max(x) - np.min(x))
+
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x,y,
 train_size = 0.7, random_state=66)
@@ -35,7 +37,7 @@ models.add(Dense(1))
 
 #3.complie/훈련
 models.compile(loss = 'mse', optimizer = 'adam')
-models.fit(x_train, y_train, epochs=1000, batch_size=1, validation_split=0.3, shuffle=0.2) 
+models.fit(x_train, y_train, epochs=1000, batch_size=10, validation_split=0.3, shuffle=0.2) 
 
 #4.평가/예측
 loss = models.evaluate(x_test, y_test) 
@@ -49,5 +51,8 @@ from sklearn.metrics import r2_score
 r2 = r2_score(y_test, y_pred)
 print("r2score ", r2)
 '''
+loss :  3109.60205078125
+r2score  0.5008961235003055
+
 r2score  0.5037277375596032
 '''

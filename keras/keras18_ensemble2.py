@@ -47,7 +47,8 @@ dence13 = Dense(5, activation='relu')(dence12)
 dence14 = Dense(5, activation='relu')(dence13)
 output2 = Dense(1)(dence14) # 실제 아웃풋이 아니라 활성화함수써됨 마지막 레이어에서는 따로 사용하는 default 활성화함수 사용
 # output이 나왔지만 히든레이어
-
+# dense_14 (Dense)                (None, 1)            8           dense_13[0][0]
+# _14는 dense명이아닌 레이어의 깊이를뜻한다
 from tensorflow.keras.layers import concatenate  #  소문자 메소드,  대문자 클래스
 from tensorflow.keras.layers import Concatenate
 
@@ -68,6 +69,11 @@ model.fit([x1_train,x2_train],[y1_train,y2_train ], epochs=10, batch_size=10, va
 # model.fit([x1,x2],y, epochs=100, batch_size=10, validation_split=0.3, shuffle=0.2) 
 
 loss = model.evaluate([x1_test,x2_test], [y1_test, y2_test]) 
+print(loss)
+'''
+loss: 1720760.7500 - dense_12_loss: 653594.3750 - dense_14_loss: 1067166.3750 - dense_12_mae: 808.3802 - dense_14_mae: 1032.9694
+[1720760.75, 653594.375, 1067166.375, 808.3802490234375, 1032.9693603515625]
+'''
 print('loss : ', loss[0])
 print(' metrics=[mae] : ', loss[1])
 # loss = model.evaluate([x1_test,x2_test],y_test) 
