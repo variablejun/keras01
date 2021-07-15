@@ -79,10 +79,11 @@ plt.xlabel('epochs')
 plt.ylabel('loss , val_loss')
 plt.legend(['train loss', 'val loss']) # 벙례
 plt.show()
-
+# 노란색 val_loss 파란색 loss
+# C:\ProgramData\Anaconda3\lib\site-packages\matplotlib\mpl-data\matplotlibrc
+# 설정파일 안에 font familly 를 NanumGothic 으로 바꾸고 unicode minus를 False로 바꾸엇습니다.
+# C:\Users\bit\.matplotlib 여기서 캐쉬파일을 지우고 재실행햐엿습니다.
 print('설정파일 : ',matplotlib.matplotlib_fname())
 print(matplotlib.get_cachedir())
-# 노란색 val_loss 파란색 loss
 
-# C:\ProgramData\Anaconda3\lib\site-packages\matplotlib\mpl-data\matplotlibrc
-# C:\Users\bit\.matplotlib
+
