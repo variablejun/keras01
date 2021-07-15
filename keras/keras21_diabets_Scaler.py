@@ -1,5 +1,3 @@
-
-from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 from sklearn.datasets import load_diabetes
 import numpy as np
 from re import M
@@ -93,6 +91,9 @@ loss :  10531.591796875
 r2score  -0.41209856014463164
 
 QuantileTransformer
+1000개의 분위를 사용하여 데이터를 분포시켜 아웃라이어의 영향을 최소화 하고 0과 1사이로 압축시켜 스케일합니다
+비선형으로 변환되어 선형상관관계를 왜곡시킬수있으나 다른척도에서 측정된 변수를 직접적으로 비교할수있습니다.
+keras23_EarlyStopping.py
 1.
 loss :  6717.26904296875
 r2score  0.0993340965486087
@@ -100,7 +101,16 @@ r2score  0.0993340965486087
 loss :  8121.9775390625
 r2score  -0.08901234379639411
 
+PowerTransformer
+데이터를 정규분포와 유사하게 만들기 위해 거듭제곱 변환을 하여 스케일하는 방법입니다.
+이분산성이나 정규성이 필요한 모델에 적합합니다.
+동분산성 평균제곱의 오차가 상수인 경우를 말합니다.
+이런 동분산이 결여되어 분산이 독립변수에 띠라 달라지는 경우를 이분산성이라고 합니다.
+
 1.
 loss :  9117.822265625
 r2score  -0.22253745775627753
+2.
+loss :  9959.384765625
+r2score  -0.33537585660348634
 '''
