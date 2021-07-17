@@ -14,11 +14,37 @@ y = datasets.iloc[:,[11]]
 
 
 '''
-깃허브 참고해서 채우자
-안돌아감 ㅜㅠ
+변한것
+output dimension
+(4898, 1)
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 1. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+(4898, 7)
+원핫 인코딩은 데이터의 분포를 벡터화 시킨것입니다.
+원핫 인코딩을 통해서 output dimension이 바뀌습니다.
+x = datasets.iloc[:,0:11]
+y = datasets.iloc[:,[11]]
+print(y.shape)
+from sklearn.preprocessing import OneHotEncoder
+OE = OneHotEncoder()
+OE.fit(y)
+y = OE.transform(y).toarray()
+print(y)
+print(y.shape)
+
+배열 받는것
+iloc 함수 행번호를 이용해서 행을 가져오는것 (마지막행 -1로도 가져옴)
+
+OneHotEncoder
 판다스를 넘파이로 바꾸고 xy분리후 y라벨확인 np.unique(y)
 다중분류
 모델링후 0.8이상
+
 '''
 from sklearn.preprocessing import OneHotEncoder
 OE = OneHotEncoder()
@@ -30,7 +56,7 @@ y = OE.transform(y).toarray()
 '''
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x,y,
-train_size = 0.95, random_state=66)
+train_size = 0.9995, random_state=66)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
 
@@ -40,25 +66,85 @@ x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
 model = Sequential()
-model.add(Dense(50,activation='relu', input_dim = 11))
+model.add(Dense(128,activation='relu', input_dim = 11))
+model.add(Dense(256,activation='relu'))
+model.add(Dense(512,activation='relu'))
+model.add(Dense(256,activation='relu'))
+model.add(Dense(128,activation='relu'))
 model.add(Dense(64,activation='relu'))
 model.add(Dense(32,activation='relu'))
 model.add(Dense(16,activation='relu'))
-model.add(Dense(1, activation='softmax'))
+model.add(Dense(7, activation='softmax'))
 
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics=['accuracy']) # 이진분류모델 에 대한 로스
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='accuracy', patience=5, mode='max', verbose=1)
+es = EarlyStopping(monitor='accuracy', patience=100, mode='max', verbose=1)
 
-model.fit(x_train, y_train, epochs=100, batch_size=10, validation_split=0.3, callbacks=[es]) 
+model.fit(x_train, y_train, epochs=1000, batch_size=64, validation_split=0.0003, callbacks=[es]) 
 
 loss = model.evaluate(x_test, y_test) 
 print('loss : ', loss[0])
-print('accuracy : ', loss[2])
+print('accuracy : ', loss[1])
+'''
+MinMaxScaler
+loss :  2.0201761722564697
+accuracy :  0.6326530575752258
+
+StandardScaler
+loss :  3.5162062644958496
+accuracy :  0.6734693646430969
 
 
-print(y_test[:5])
-y_predict = model.predict(x_test[:5])
-print(y_predict)
+RobustScaler
+평균대신 중앙값을 이용하는게 데이터의 분포를 이용하는 작업에서는 훨씬더 정확할수도있고 더 잘나와서 사용
+loss :  2.1332619190216064
+accuracy :  0.6938775777816772
+
+train size 0.995
+loss :  4.441403865814209
+accuracy :  0.7200000286102295
+
+patience= 50
+loss :  3.736879825592041
+accuracy :  0.7200000286102295
+
+patience=100
+loss :  3.6057345867156982
+accuracy :  0.7599999904632568
+
+모델링 수정 후
+model.add(Dense(128,activation='relu', input_dim = 11))
+model.add(Dense(256,activation='relu'))
+model.add(Dense(512,activation='relu'))
+model.add(Dense(256,activation='relu'))
+model.add(Dense(128,activation='relu'))
+model.add(Dense(64,activation='relu'))
+model.add(Dense(32,activation='relu'))
+model.add(Dense(16,activation='relu'))
+
+Epoch 00375: early stopping
+1/1 [==============================] - 0s 13ms/step - loss: 9.9341e-07 - accuracy: 1.0000
+loss :  9.934092304320075e-07
+accuracy :  1.0
+
+Epoch 00382: early stopping
+1/1 [==============================] - 0s 15ms/step - loss: 0.0014 - accuracy: 1.0000
+loss :  0.0013560910010710359
+accuracy :  1.0
+
+MaxAbsScaler
+loss :  1.2159374952316284
+accuracy :  0.636734664440155
+
+QuantileTransformer
+loss :  2.848801851272583
+accuracy :  0.6040816307067871
+
+PowerTransformer
+loss :  3.4956367015838623
+accuracy :  0.6775510311126709
+
+'''
+
 
 
