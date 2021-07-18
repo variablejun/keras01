@@ -1,35 +1,35 @@
 import numpy as np
-import pandas as pd
-from tensorflow.keras.models import Sequential 
-from tensorflow.keras.layers import Dense
+import matplotlib.pyplot as plt
+from tensorflow.keras.datasets import cifar100
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, MaxPooling2D
 
-datasets = pd.read_csv('../_data/winequality-white.csv', sep=';' , index_col=None, header=0) # ./ 현재폴더 ../ 상위폴더 데이터 구분자 ;
-# index는 없고 헤더는 첫번째 라인
+(x_train, y_train), (x_test, y_test) = cifar100.load_data() 
+print(x_train.shape,y_train.shape ) # (60000, 28, 28)
+print(x_test.shape,y_test.shape )
 
 
-print(datasets.shape) # (4898, 12)
+x_train = x_train.reshape(50000, 32, 32, 3)
+x_test = x_test.reshape(10000, 32, 32, 3)
 
-x = datasets.iloc[:,0:11]
-y = datasets.iloc[:,[11]]
-print(y.shape)
+'''
+(50000, 32, 32, 3) (50000, 1)
+(10000, 32, 32, 3) (10000, 1)
+'''
 from sklearn.preprocessing import OneHotEncoder
 OE = OneHotEncoder()
-OE.fit(y)
-y = OE.transform(y).toarray()
-print(y)
-print(y.shape)
-'''
- fixed acidity  volatile acidity  citric acid  residual sugar  chlorides  ...  total 
-sulfur dioxide  density    pH  sulphates  alcohol
-0               7.0              0.27         0.36            20.7      0.045  ...                 170.0  1.00100  3.00       0.45      8.8
-1               6.3              0.30         0.34             1.6      0.049  ...                 132.0  0.99400  3.30       0.49      9.5
-3               7.2              0.23         0.32             8.5      0.058  ...                 186.0  0.99560  3.19       0.40      9.9
-4               7.2              0.23         0.32             8.5      0.058  ...                 186.0  0.99560  3.19       0.40      9.9
-...             ...               ...          ...             ...        ...  ...                   ...      ...   ...        ...      ...
-4893            6.2              0.21         0.29             1.6      0.039  ...                  92.0  0.99114  3.27       0.50     11.2
-4894            6.6              0.32         0.36             8.0      0.047  ...                 168.0  0.99490  3.15       0.46      9.6
-4895            6.5              0.24         0.19             1.2      0.041  ...                 111.0  0.99254  2.99       0.46      9.4
-4896            5.5              0.29         0.30             1.1      0.022  ...                 110.0  0.98869  3.34       0.38     12.8
-4897            6.0              0.21         0.38             0.8      0.020  ...                  98.0  0.98941  3.26       0.32     11.8
+y_test = y_test.reshape(-1, 1)
+y_train = y_train.reshape(-1, 1)
+OE.fit(y_test)
+y_test = OE.transform(y_test).toarray() # 리스트를 배열로 바꾸어주는 함수
+OE.fit(y_train)
+y_train = OE.transform(y_train).toarray()
+print(y_test.shape)
+print(y_train.shape)
 
+'''
+(50000, 32, 32, 3) (50000, 1)
+(10000, 32, 32, 3) (10000, 1)
+(10000, 100)
+(50000, 100)
 '''

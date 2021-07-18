@@ -59,7 +59,6 @@ x_train, x_test, y_train, y_test = train_test_split(x,y,
 train_size = 0.9995, random_state=66)
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, MaxAbsScaler, QuantileTransformer, PowerTransformer
-
 scaler = RobustScaler()
 scaler.fit(x_train) 
 x_train = scaler.transform(x_train) 
