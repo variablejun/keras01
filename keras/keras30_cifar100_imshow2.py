@@ -75,7 +75,11 @@ loss = model.evaluate(x_test, y_test)
 
 print('loss : ', loss[0])
 print('accuracy : ', loss[1])
+
 '''
+loss :  18.9493350982666
+accuracy :  0.1445000022649765
+
 loss :  3.57077693939209
 accuracy :  0.15070000290870667
 
