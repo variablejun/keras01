@@ -106,4 +106,21 @@ model.add(Flatten())#(N, 180)
 걸린시간 4.68802547454834
 loss :  13.895647048950195
 r2score  0.892231884416774
+
+
+model = Sequential() 
+model.add(Conv2D(26,3 ,padding = 'same' ,input_shape=(13,1,1)))
+model.add(Conv2D(16,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(1,3,padding = 'same' ,activation = 'relu'))
+model.add(Flatten())#(N, 180)
+model.add(Dense(256,activation='relu'))
+model.add(Dense(128,activation='relu'))
+model.add(Dense(64,activation='relu'))
+model.add(Dense(32,activation='relu'))
+model.add(Dense(16,activation='relu'))
+model.add(Dense(1))
+
+걸린시간 12.57477617263794
+loss :  8.286820411682129
+r2score  0.9357313132695979
 '''
