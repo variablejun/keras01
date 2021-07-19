@@ -1,6 +1,6 @@
 from sklearn.datasets import load_breast_cancer
 from tensorflow.keras.models import Sequential 
-from tensorflow.keras.layers import Conv1D, Dense, Flatten, MaxPooling1D, Dropout, GlobalAveragePooling1D
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, MaxPooling2D, Dropout, GlobalAveragePooling2D
 
 import numpy as np 
 dataset = load_breast_cancer()
@@ -27,18 +27,17 @@ x_train = x_train.reshape(540,30,1,1) # 이미지 4차원 데이터도 순서변
 x_test = x_test.reshape(29,30, 1,1)
 
 model = Sequential()
-model.add(Conv1D(256,3 ,padding = 'valid' ,input_shape=(30,1)))
-model.add(Conv1D(128,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(256,3 ,padding = 'same' ,input_shape=(30,1,1)))
+model.add(Conv2D(128,3,padding = 'same' ,activation = 'relu'))
 
-model.add(Conv1D(64,3,padding = 'same' ,activation = 'relu'))
-model.add(Conv1D(32,3,padding = 'same' ,activation = 'relu'))
-model.add(MaxPooling1D())
-model.add(Conv1D(128,3,padding = 'valid' ,activation = 'relu'))
-model.add(Conv1D(64,3,padding = 'same' ,activation = 'relu'))
-model.add(Conv1D(32,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(64,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(32,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(128,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(64,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(32,3,padding = 'same' ,activation = 'relu'))
 
-model.add(Conv1D(16,3,padding = 'same' ,activation = 'relu'))
-model.add(Conv1D(1,3,padding = 'valid' ,activation = 'relu'))
+model.add(Conv2D(16,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(1,3,padding = 'same' ,activation = 'relu'))
 model.add(Flatten())
 model.add(Dense(256,activation='relu'))
 model.add(Dense(128,activation='relu'))
@@ -70,4 +69,10 @@ accuracy :  0.6551724076271057
 걸린시간 0.11479067802429199
 loss :  0.15711985528469086
 accuracy :  0.9655172228813171
+
+2D
+걸린시간 0.12848258018493652
+loss :  0.001487557776272297
+accuracy :  1.0
+
 '''

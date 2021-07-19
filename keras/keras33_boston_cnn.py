@@ -1,7 +1,7 @@
 
 from re import M
 from tensorflow.keras.models import Sequential 
-from tensorflow.keras.layers import Conv1D, Dense, Flatten, MaxPooling1D, Dropout, GlobalAveragePooling1D
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, MaxPooling2D, Dropout, GlobalAveragePooling2D
 
 import numpy as np 
 
@@ -42,19 +42,11 @@ x_test = x_test.reshape(26, 13, 1,1)
 
 #2.모델 구성 1D이용시 차원수부족 오류
 model = Sequential() 
-model.add(Conv1D(256,3 ,padding = 'valid' ,input_shape=(13,1)))
-model.add(Conv1D(128,3,padding = 'same' ,activation = 'relu'))
-
-model.add(Conv1D(64,3,padding = 'same' ,activation = 'relu'))
-model.add(Conv1D(32,3,padding = 'same' ,activation = 'relu'))
-model.add(MaxPooling1D())
-model.add(Conv1D(128,3,padding = 'valid' ,activation = 'relu'))
-model.add(Conv1D(64,3,padding = 'same' ,activation = 'relu'))
-model.add(Conv1D(32,3,padding = 'same' ,activation = 'relu'))
-
-model.add(Conv1D(16,3,padding = 'same' ,activation = 'relu'))
-model.add(Conv1D(1,3,padding = 'valid' ,activation = 'relu'))
+model.add(Conv2D(26,3 ,padding = 'same' ,input_shape=(13,1,1)))
+model.add(Conv2D(16,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(1,3,padding = 'same' ,activation = 'relu'))
 model.add(Flatten())#(N, 180)
+model.add(Dense(256,activation='relu'))
 model.add(Dense(128,activation='relu'))
 model.add(Dense(64,activation='relu'))
 model.add(Dense(32,activation='relu'))
@@ -99,4 +91,19 @@ validation_split=0.003
 loss :  6.488640308380127
 r2score  0.9496771549474132
 
+2D
+걸린시간 6.761014938354492
+loss :  23.282869338989258
+r2score  0.8194289855347043
+
+model = Sequential() 
+model.add(Conv2D(26,3 ,padding = 'same' ,input_shape=(13,1,1)))
+
+model.add(Conv2D(16,3,padding = 'same' ,activation = 'relu'))
+model.add(Conv2D(1,3,padding = 'same' ,activation = 'relu'))
+model.add(Flatten())#(N, 180)
+
+걸린시간 4.68802547454834
+loss :  13.895647048950195
+r2score  0.892231884416774
 '''
