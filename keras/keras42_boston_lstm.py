@@ -19,7 +19,7 @@ from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x,y,
 train_size = 0.95, random_state=66)
 
-x_train = x_train.reshape(480,13,1) # 이미지 3차원 데이터도 순서변경없이 차원수를 낮춰 RNN연산가능
+x_train = x_train.reshape(480,13,1) #
 x_test = x_test.reshape(26, 13, 1)
 
 '''
@@ -30,7 +30,8 @@ x_test = x_test.reshape(26, 13, 1)
 
 #2.모델 구성 1D이용시 차원수부족 오류
 model = Sequential()
-model.add(LSTM(32,activation = 'relu',input_shape=(13,1)))
+model.add(LSTM(16,activation = 'relu',input_shape=(13,1)))
+model.add(Dense(32,activation='relu'))
 model.add(Dense(16,activation='relu'))
 model.add(Dense(8,activation='relu'))
 model.add(Dense(4,activation='relu'))

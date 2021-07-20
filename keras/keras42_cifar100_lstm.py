@@ -55,11 +55,11 @@ y_train = OE.transform(y_train).toarray()
 model = Sequential() 
 
 model = Sequential()
-model.add(LSTM(32,activation = 'relu',input_shape=(32,96)))
-model.add(Dense(16,activation='relu'))
-model.add(Dense(8,activation='relu'))
-model.add(Dense(4,activation='relu'))
-model.add(Dense(2,activation='relu'))
+model.add(LSTM(512,activation = 'relu',input_shape=(32,96)))
+model.add(Dense(256,activation='relu'))
+model.add(Dense(128,activation='relu'))
+model.add(Dense(64,activation='relu'))
+model.add(Dense(32,activation='relu'))
 model.add(Dense(100, activation='sigmoid'))# 원핫 인코딩을하면 배열로 특성있는 부분이 펴지면서 바뀐다
 
 '''
@@ -76,7 +76,7 @@ es = EarlyStopping(monitor='val_accuracy', patience=20, mode='max', verbose=3)
 import time
 starttime = time.time()
 model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics=['accuracy'])
-hist = model.fit(x_train, y_train, epochs=10, batch_size=128, validation_split=0.003, verbose=2,callbacks=[es]) 
+hist = model.fit(x_train, y_train, epochs=20, batch_size=64, validation_split=0.003, verbose=2,callbacks=[es]) 
 loss = model.evaluate(x_test, y_test,batch_size=64) 
 end = time.time()- starttime
 
@@ -106,5 +106,9 @@ accuracy :  0.2378000020980835
 RNN
 걸린시간 254.24207973480225
 loss :  0.09794498234987259
+accuracy :  0.009999999776482582
+
+걸린시간 260.92588925361633
+loss :  0.056008417159318924
 accuracy :  0.009999999776482582
 '''

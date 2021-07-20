@@ -1,7 +1,7 @@
 
 from re import M
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, SimpleRNN, Dropout, LSTM, GRU, Input
+from tensorflow.keras.layers import Dense, SimpleRNN, Dropout, LSTM, GRU, Input, Dropout
 import numpy as np 
 
 from sklearn.datasets import load_breast_cancer
@@ -25,12 +25,8 @@ x_test = x_test.reshape(29,30, 1)
 '''
 
 '''
-
-
-
-#2.모델 구성 1D이용시 차원수부족 오류
 model = Sequential()
-model.add(LSTM(32,activation = 'relu',input_shape=(30,1)))
+model.add(LSTM(35,activation = 'relu',input_shape=(30,1)))
 model.add(Dense(16,activation='relu'))
 model.add(Dense(8,activation='relu'))
 model.add(Dense(4,activation='relu'))
@@ -41,7 +37,7 @@ model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics=['accura
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_accuracy', patience=30, mode='max', verbose=1)
 
-model.fit(x_train, y_train, epochs=1000, batch_size=10, validation_split=0.3, callbacks=[es]) 
+model.fit(x_train, y_train, epochs=1000, batch_size=10, validation_split=0.003, callbacks=[es]) 
 import time
 starttime = time.time()
 loss = model.evaluate(x_test, y_test) 
@@ -61,6 +57,12 @@ accuracy :  1.0
 RNN 수정후
 걸린시간 0.04053854942321777
 loss :  0.18041259050369263
+accuracy :  0.931034505367279
+
+validation_split=0.003
+LSTM(35
+걸린시간 0.04267549514770508
+loss :  0.2907241880893707
 accuracy :  0.931034505367279
 
 '''

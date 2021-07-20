@@ -43,11 +43,11 @@ y_train = OE.transform(y_train).toarray()
 # 0.992 이상으로만들기 , 캡쳐후 단톡에 전송
 
 model = Sequential()
-model.add(LSTM(32,activation = 'relu',input_shape=(32,96)))
+model.add(LSTM(128,activation = 'relu',input_shape=(32,96)))
+model.add(Dense(64,activation='relu'))
+model.add(Dense(32,activation='relu'))
 model.add(Dense(16,activation='relu'))
 model.add(Dense(8,activation='relu'))
-model.add(Dense(4,activation='relu'))
-model.add(Dense(2,activation='relu'))
 model.add(Dense(10, activation='sigmoid')) # 원핫 인코딩을하면 배열로 특성있는 부분이 펴지면서 바뀐다
 
 from tensorflow.keras.callbacks import EarlyStopping
@@ -55,7 +55,7 @@ es = EarlyStopping(monitor='val_accuracy', patience=30, mode='max', verbose=3)
 import time
 starttime = time.time()
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics=['accuracy'])
-model.fit(x_train, y_train, epochs=10, batch_size=128, validation_split=0.003, verbose=2,callbacks=[es]) 
+model.fit(x_train, y_train, epochs=20, batch_size=256, validation_split=0.003, verbose=2,callbacks=[es]) 
 loss = model.evaluate(x_test, y_test) 
 end = time.time()- starttime
 
@@ -83,7 +83,12 @@ accuracy :  0.5127000212669373
 loss :  2.0250747203826904
 accuracy :  0.546999990940094
 
+RNN
 걸린시간 263.8860836029053
 loss :  2.3025999069213867
+accuracy :  0.10000000149011612
+
+걸린시간 260.55508756637573
+loss :  2.3025872707366943
 accuracy :  0.10000000149011612
 '''
