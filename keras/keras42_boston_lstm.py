@@ -28,7 +28,7 @@ x_test = x_test.reshape(26, 13, 1)
 
 
 
-#2.모델 구성 1D이용시 차원수부족 오류
+
 model = Sequential()
 model.add(LSTM(16,activation = 'relu',input_shape=(13,1)))
 model.add(Dense(32,activation='relu'))

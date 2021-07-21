@@ -19,8 +19,8 @@ train_size = 0.95, random_state=66)
 
 
 # (23, 10) (419, 10)
-x_train = x_train.reshape(419,10,1) # 이미지 4차원 데이터도 순서변경없이 차원수를 낮춰 DNN연산가능
-x_test = x_test.reshape(23, 10, 1) # 트레인 사이즈의 크기를 바꿀경우 에러가 난다.
+x_train = x_train.reshape(419,10,1) # 
+x_test = x_test.reshape(23, 10, 1) # 
 
 #2.모델 구성
 

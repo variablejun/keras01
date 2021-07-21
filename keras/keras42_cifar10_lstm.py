@@ -27,7 +27,7 @@ array=[7 2 1 ... 4 5 6].
 Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample
 '''
 OE.fit(y_test)
-y_test = OE.transform(y_test).toarray() # 리스트를 배열로 바꾸어주는 함수
+y_test = OE.transform(y_test).toarray() 
 OE.fit(y_train)
 y_train = OE.transform(y_train).toarray()
 '''
@@ -36,11 +36,7 @@ y_train = OE.transform(y_train).toarray()
 (10000, 10)
 (50000, 10)
 '''
-# Conv2D에 들어가 연산하기 위해 3차원 데이터를 4차원 데이터로 쉐입을 바꾸어준다. 
 
-
-
-# 0.992 이상으로만들기 , 캡쳐후 단톡에 전송
 
 model = Sequential()
 model.add(LSTM(128,activation = 'relu',input_shape=(32,96)))
@@ -48,7 +44,7 @@ model.add(Dense(64,activation='relu'))
 model.add(Dense(32,activation='relu'))
 model.add(Dense(16,activation='relu'))
 model.add(Dense(8,activation='relu'))
-model.add(Dense(10, activation='sigmoid')) # 원핫 인코딩을하면 배열로 특성있는 부분이 펴지면서 바뀐다
+model.add(Dense(10, activation='sigmoid')) 
 
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_accuracy', patience=30, mode='max', verbose=3)

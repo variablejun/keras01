@@ -39,7 +39,6 @@ values로 형변환하여 사용
 (3, 11) (4895, 11)
 
 '''
-model = Sequential() 
 model = Sequential()
 model.add(LSTM(32,activation = 'relu',input_shape=(11,1)))
 model.add(Dense(16,activation='relu'))
