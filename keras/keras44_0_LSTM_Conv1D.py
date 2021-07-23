@@ -27,6 +27,9 @@ def split_x(dataset, size):
 dataset = split_x(x_data, size)
 x = dataset[:, :5]
 y = dataset[:,5]
+print(x)
+print(y)
+
 print(x.shape)
 print(y.shape)
 
